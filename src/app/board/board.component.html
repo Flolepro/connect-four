@@ -1,1 +1,5 @@
-<p>board works!</p>
+<div class="app-container__board">
+  <div class="board__col" *ngFor="let col of tiles">
+    <div class="{{tile.color}}" *ngFor="let tile of col"></div>
+  </div>
+</div>

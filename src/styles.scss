@@ -118,19 +118,56 @@ h1{
 }
 
 //Board collumn hover action for last child highlight
-.board__col:hover > .board-tile:last-child{
-    background-color: white;
+.board__col:hover > .board__tile--white:last-child{
+    background-color: black;
 }
 
+
 //Board tile hover actionfor cursor change
-.board-tile:hover{
+.board__tile--white:hover{
   cursor: pointer;
 }
 
 //The game's tiles
-.board-tile{
+.board__tile--white{
   border-radius: 50%;
-  background-color: grey;
+  background-color: white;
+  width:35px;
+  height:35px;
+  margin:6px;
+  bottom: 0;
+  border: 2px inset white;
+
+  // 992px window width and more
+  @include lg {
+    width:50px;
+    height:50px;
+    margin:10px;
+  }
+}
+
+//The game's tiles
+.board__tile--blue{
+  border-radius: 50%;
+  background-color: blue;
+  width:35px;
+  height:35px;
+  margin:6px;
+  bottom: 0;
+  border: 2px inset white;
+
+  // 992px window width and more
+  @include lg {
+    width:50px;
+    height:50px;
+    margin:10px;
+  }
+}
+
+//The game's tiles
+.board__tile--red{
+  border-radius: 50%;
+  background-color: red;
   width:35px;
   height:35px;
   margin:6px;
