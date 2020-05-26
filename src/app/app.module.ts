@@ -5,22 +5,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
 import { PlayerComponent } from './player/player.component';
-import { GameComponent } from './game/game.component';
 import { TileComponent } from './tile/tile.component';
+
+import { TileService } from './services/tile.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardComponent,
     PlayerComponent,
-    GameComponent,
     TileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    TileService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
