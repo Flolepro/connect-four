@@ -1,1 +1,164 @@
-/* You can add global styles to this file, and also import other style files */
+//This is a mobile first's style
+
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+
+// Tablets and small desktops
+$screen-lg-min: 992px;
+
+// Large tablets and desktops
+$screen-xl-min: 1200px;
+
+// Board width
+$board-width: 500px;
+
+// Small devices
+@mixin sm {
+  @media (min-width: #{$screen-sm-min}) {
+      @content;
+  }
+}
+
+// Medium devices
+@mixin md {
+  @media (min-width: #{$screen-md-min}) {
+      @content;
+  }
+}
+
+// Large devices
+@mixin lg {
+  @media (min-width: #{$screen-lg-min}) {
+      @content;
+  }
+}
+
+// Extra large devices
+@mixin xl {
+  @media (min-width: #{$screen-xl-min}) {
+      @content;
+  }
+}
+
+
+// Custom devices
+@mixin rwd($screen) {
+  @media (min-width: $screen+'px') {
+      @content;
+  }
+}
+
+//The page title
+h1{
+  text-align: center;
+}
+
+//The page background
+.app-background{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: -100;
+  background: url("./assets/images/piles-of-wood-royalty-free-image-106548715-1531507536.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center center;
+  -webkit-filter: blur(10px); /* Safari 6.0 - 9.0 */
+  filter: blur(10px);
+}
+
+//The application main container
+.app-container {
+  height: 440px;
+  background-color: grey;
+
+  // 576px window width and more
+  @include sm {
+  }
+
+  // 992px window width and more
+  @include lg {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 1100px;
+      padding: 0 15px;
+      height: 600px;
+  }
+
+  // 1400px window width and more
+  @include rwd(1400) {
+      margin-bottom: 20px;
+      margin-top: 20px;
+  }
+}
+
+//The application game board
+.app-container__board {
+  height:350px;
+  width:350px;
+  background-color: rgb(33, 80, 209);
+  margin:auto;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+
+  // 992px window width and more
+  @include lg {
+    width:500px;
+    height:500px;
+  }
+
+}
+
+//Board collumn hover action for last child highlight
+.board__col:hover > .board-tile:last-child{
+    background-color: white;
+}
+
+//Board tile hover actionfor cursor change
+.board-tile:hover{
+  cursor: pointer;
+}
+
+//The game's tiles
+.board-tile{
+  border-radius: 50%;
+  background-color: grey;
+  width:35px;
+  height:35px;
+  margin:6px;
+  bottom: 0;
+  border: 2px inset white;
+
+  // 992px window width and more
+  @include lg {
+    width:50px;
+    height:50px;
+    margin:10px;
+  }
+}
+
+//The board's collumns
+.board__col{
+  width:45px;
+  padding-top:20px;
+  height:300px;
+  margin-left:3px;
+  display: inline-block;
+
+  // 992px window width and more
+  @include lg {
+    width:60px;
+    padding-top:30px;
+    height:500px;
+    margin-left:8px;
+    display: inline-block;
+  }
+}
