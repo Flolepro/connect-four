@@ -7,7 +7,8 @@ import { BoardComponent } from './board/board.component';
 import { PlayerComponent } from './player/player.component';
 import { TileComponent } from './tile/tile.component';
 
-import { TileService } from './services/tile.service';
+import { GameService } from './services/game.service';
+import { ColorService } from './services/color.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TileService } from './services/tile.service';
     AppRoutingModule
   ],
   providers: [
-    TileService
+    ColorService,
+    GameService
   ],
   bootstrap: [AppComponent]
 })

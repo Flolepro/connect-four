@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TileService } from '../services/tile.service';
+import { GameService } from '../services/game.service';
+import { ColorService } from '../services/color.service';
 
 @Component({
   selector: 'app-board',
@@ -8,7 +9,7 @@ import { TileService } from '../services/tile.service';
 })
 export class BoardComponent implements OnInit {
 
-  constructor(private tileService : TileService) {
+  constructor(private gameService : GameService) {
 
   }
 
@@ -21,21 +22,28 @@ export class BoardComponent implements OnInit {
 
   //Component initialization
   ngOnInit(): void {
-    this.tiles=this.tileService.tiles;
+    this.tiles=this.gameService.tiles;
 
     let that = this;
-    let thatTileService = this.tileService;
+    let thatGameService = this.gameService;
     let playerStart = 1;
-    setInterval(function(){
+    let gameIsWin = false;
+    let interval =
+      setInterval(function(){
+        gameIsWin = thatGameService.coinDrop(that.getRandomInt(7),playerStart);
+          if(playerStart == 1){
+            playerStart=2;
+          }
+          else{
+            playerStart=1;
+          }
+          if(gameIsWin==true){
+            clearInterval(interval);
+          }
+      }, 100);
 
-      thatTileService.coinDrop(that.getRandomInt(7),playerStart);
-      if(playerStart == 1){
-        playerStart=2;
-      }
-      else{
-        playerStart=1;
-      }
-      }, 1000);
+
+
   }
 
 
