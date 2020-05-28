@@ -1,0 +1,10 @@
+.sidebar{
+  float: right;
+  margin-top:20px;
+  width:300px;
+  height:300px;
+  &__toggle-button{
+    height:50px;
+    width:200px;
+  }
+}

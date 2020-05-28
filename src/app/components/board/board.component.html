@@ -1,0 +1,5 @@
+<div class="board">
+  <div class="board__col" *ngFor="let col of tiles.reverse()">
+    <div class="board__col__tile{{tile.color}}" *ngFor="let tile of col.reverse()"></div>
+  </div>
+</div>

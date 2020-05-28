@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
 export class ColorService{
 
   //The default color for an empty tile
-  DEFAULT_COLOR = 'board__tile--white';
+  DEFAULT_COLOR = '--white';
 
   //The color of the player 1 coins
-  P1_COLOR = 'board__tile--blue';
+  P1_COLOR = '--blue';
 
   //The color of the player 2 coins
-  P2_COLOR = 'board__tile--red';
+  P2_COLOR = '--red';
 
   constructor() { }
 
