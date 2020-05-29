@@ -1,8 +1,5 @@
-<body>
-  <div class="app-background"></div>
-  <div class="app-container">
-    <h2>Connect four !</h2>
-    <app-board></app-board>
-    <app-sidebar></app-sidebar>
+<div [class.alternative]="otherTheme">
+  <div class="mat-app-background">
+    <router-outlet></router-outlet>
   </div>
-</body>
+</div>

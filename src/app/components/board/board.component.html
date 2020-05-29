@@ -1,5 +1,28 @@
-<div class="board">
-  <div class="board__col" *ngFor="let col of tiles.reverse()">
-    <div class="board__col__tile{{tile.color}}" *ngFor="let tile of col.reverse()"></div>
+<!--<div class="app-background"></div>-->
+
+<div class="app-container container container-fluid">
+  <!-- First Row displayed : the title -->
+  <div class="row">
+    <div class="col-sm"></div>
+    <div class="col-sm">
+      <h2>Connect four !</h2>
+    </div>
+    <div class="col-sm"></div>
+  </div>
+  <!-- Second Row displayed : the board -->
+  <div class="row">
+    <!--Board left panel : game -->
+    <div class="col-sm app-container__left-panel">
+      <div class="app-container__left-panel__board">
+        <div class="app-container__left-panel__board__col" *ngFor="let col of tiles.reverse()" (click)="coinDropOn(col)">
+          <div class="app-container__left-panel__board__col__tile app-container__left-panel__board__col__tile{{tile.color}}" *ngFor="let tile of col.reverse()"></div>
+        </div>
+      </div>
+    </div>
+    <!--Board right panel : actions -->
+    <div class="col-sm app-container__right-panel">
+      <app-sidebar></app-sidebar>
+    </div>
   </div>
 </div>
+

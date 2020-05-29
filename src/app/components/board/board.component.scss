@@ -1,7 +1,7 @@
 //This is a mobile first's style
 
 // Small tablets and large smartphones (landscape view)
-$screen-sm-min: 576px;
+$screen-sm-min: 568px;
 
 // Small tablets (portrait view)
 $screen-md-min: 768px;
@@ -51,91 +51,149 @@ $board-width: 500px;
   }
 }
 
+//The page title
 
 
-//The application game board
-.board {
-  //Board style
-  float: left;
-  height:250px;
-  width:250px;
-  background-color: rgb(33, 80, 209);
-  margin-left:100px;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
-  @include lg {
-    width:500px;
-    height:500px;
-  }
-  //Columns style
-  &__col{
-    width:35px;
-    padding-top:20px;
-    height:300px;
-    display: inline-block;
-    // 992px window width and more
-    @include lg {
-      width:60px;
-      padding-top:30px;
-      height:500px;
-      margin-left:8px;
-      display: inline-block;
-    }
-    //Tiles style
-    &__tile{
-      &--white{
-        width:25px;
-        height:25px;
-        margin:6px;
-        bottom: 0;
-        border: 2px inset white;
-        border-radius: 50%;
-        @include lg {
-          width:50px;
-          height:50px;
-          margin:10px;
-        }
-        background-color: white;
-        &:hover{
-          cursor: pointer;
-        }
-      }
-      &--blue{
-        width:25px;
-        height:25px;
-        margin:6px;
-        bottom: 0;
-        border: 2px inset white;
-        border-radius: 50%;
-        @include lg {
-          width:50px;
-          height:50px;
-          margin:10px;
-        }
-        background-color: blue;
-      }
-      &--red{
-        width:25px;
-        height:25px;
-        margin:6px;
-        bottom: 0;
-        border: 2px inset white;
-        border-radius: 50%;
-        @include lg {
-          width:50px;
-          height:50px;
-          margin:10px;
-        }
-        background-color: red;
-      }
-    }
-  }
+//The page background, not used anymore, maybe reuse later
+.app-background{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: -100;
+  //background: url("../assets/images/piles-of-wood-royalty-free-image-106548715-1531507536.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center center;
+  -webkit-filter: blur(10px); /* Safari 6.0 - 9.0 */
+  filter: blur(10px);
 }
 
-//Board collumn hover action for last child highlight
-.board__col:hover > .board__tile--white:last-child{
-    background-color: black;
+//The application container
+.app-container{
+  height: 100vh;
+  top:0;
+
+
+  & h2{
+    text-align: center;
+  }
+  //The left panel
+  &__left-panel{
+
+    //The application game board
+    &__board {
+
+      //Board style
+      height:250px;
+      width:250px;
+      margin:auto;
+      background-color: rgb(33, 80, 209);
+      -webkit-border-radius: 15px;
+      -moz-border-radius: 15px;
+      border-radius: 15px;
+
+      @include sm {
+        width:200px;
+        height:200px;
+      }
+
+      @include md {
+        height:250px;
+        width:250px;
+      }
+
+      @include lg {
+        width:500px;
+        height:500px;
+      }
+
+      //Columns style
+      &__col{
+        width:35px;
+        padding-top:20px;
+        height:300px;
+        display: inline-block;
+
+        @include sm {
+          width:28.5px;
+          padding-top:14px;
+          height:200px;
+        }
+
+        @include md {
+          width:35px;
+          padding-top:20px;
+          height:300px;
+        }
+
+        @include lg {
+          width:60px;
+          padding-top:30px;
+          height:500px;
+          margin-left:8px;
+        }
+
+        //&:hover > &__tile--white:last-of-type{
+        //  background-color: grey;
+        //}
+        //Tiles style
+        &__tile{
+          width:25px;
+          height:25px;
+          margin:6px;
+          bottom: 0;
+          border: 2px inset white;
+          border-radius: 50%;
+
+          @include sm {
+            width:20px;
+            height:20px;
+            margin:4px;
+          }
+
+          @include md {
+            width:25px;
+            height:25px;
+            margin:6px;
+          }
+
+          @include lg {
+            width:50px;
+            height:50px;
+            margin:10px;
+          }
+
+          //Empty tile
+          &--white{
+            background-color: white;
+            &:hover{
+              cursor: pointer;
+            }
+          }
+
+          //Blue tile
+          &--blue{
+            background-color: blue;
+
+          }
+
+          //Red tile
+          &--red{
+            background-color: red;
+            @include lg {
+              width:50px;
+              height:50px;
+              margin:10px;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 
