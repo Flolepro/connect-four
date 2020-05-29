@@ -2,11 +2,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ColorService } from './color.service';
 import {Tile} from '../models/tile';
+import { AddRound, UpdateRound, ClearRound } from '../shared/actions/round.ations';
+import { Player } from '../models/player';
+import { Store } from '@ngxs/store';
+import { Round } from '../models/round';
 
 @Injectable()
 export class GameService{
 
-  constructor(private colorService: ColorService) { }
+  constructor(private colorService: ColorService,private store: Store) { }
 
   //Maximum nummber of collumns
   maxCols = 7;
@@ -25,6 +29,72 @@ export class GameService{
 
   //The current player playing
   playerPlaying = 1;
+  player1 :Player;
+  player2 :Player;
+
+  //The current round
+  currentRound:Round;
+  currentRoundWin:false;
+  public currentRoundWinSubject: Subject<boolean> = new BehaviorSubject<boolean>(false);
+  public currentRoundWinActive = this.currentRoundWinSubject.asObservable();
+
+  //Initialize white tiles
+  clearTiles(){
+    this.messageSubject.next('Initialization');
+    this.tiles = [];
+    //Init game tiles
+    for (let colIndex = 0; colIndex < this.maxCols; colIndex++) {
+      this.tiles[colIndex] = [];
+      for (let lineIndex = 0; lineIndex < this.maxLines; lineIndex++) {
+        this.tiles[colIndex][lineIndex]= new Tile(this.colorService.DEFAULT_COLOR);
+      }
+    }
+    this.tilesSubject.next(this.tiles);
+  }
+
+  //Game initialization
+  initNewGame(){
+    //Clear tiles
+    this.clearTiles();
+    //Init players
+    let idFirstPlayer = 1;
+    let idSecondPlayer = 2;
+    this.playerPlaying=idFirstPlayer;
+    this.player1 = new Player('Player 1',idFirstPlayer);
+    this.player2 = new Player('Player 2',idSecondPlayer);
+
+    //Notify listeners
+    this.messageSubject.next('Player '+this.playerPlaying+' turn');
+    this.tilesSubject.next(this.tiles);
+
+    //Init round in store
+    let id = 1;
+    let turns = [{player:this.player1,tileDropped:new Array<number>()}];
+    let winner = '';
+    this.store.dispatch(new ClearRound());
+    this.currentRound = new Round(id,turns,winner);
+    this.currentRoundWinSubject.next(false);
+    this.store.dispatch(new AddRound(this.currentRound));
+  }
+
+  //New round initialization
+  initNewRound(){
+    //Clear tiles
+    this.clearTiles();
+    this.playerPlaying=1;
+    //Notify listeners
+    this.messageSubject.next('Player '+this.playerPlaying+' turn');
+
+    //Init round in store
+    let id = 1;
+    let turns = [{player:this.player1,tileDropped:new Array<number>()}];
+    let winner = '';
+    this.currentRound = new Round(this.currentRound.id+1,turns,winner);
+    this.currentRoundWinSubject.next(false);
+    this.store.dispatch(new AddRound(this.currentRound));
+  }
+
+
 
   //Iterate and check the win conditions in the actual board for the given player
   fetchXY(playerColor:string):boolean{
@@ -67,6 +137,9 @@ export class GameService{
     //Fetch all win conditions
     if(this.fetchXY(playerColor)){
       this.messageSubject.next('Player '+this.playerPlaying+' has win');
+      this.currentRoundWinSubject.next(true);
+      this.currentRound.winner='Player '+this.playerPlaying;
+      this.store.dispatch(new UpdateRound(this.currentRound));
       return true;
     }
     if(this.playerPlaying == 1){
@@ -102,24 +175,7 @@ export class GameService{
     return this.isGameWin();
   }
 
-  initNewGame(){
-    //Initialize the game with white tiles
-    this.messageSubject.next('Initialization');
-    this.tiles = [];
-    //Init game tiles
-    for (let colIndex = 0; colIndex < this.maxCols; colIndex++) {
-      this.tiles[colIndex] = [];
-      for (let lineIndex = 0; lineIndex < this.maxLines; lineIndex++) {
-        this.tiles[colIndex][lineIndex]= new Tile(this.colorService.DEFAULT_COLOR);
-      }
-    }
-    //Init players
-    this.playerPlaying=1;
 
-    //Notify listeners
-    this.messageSubject.next('Player '+this.playerPlaying+' turn');
-    this.tilesSubject.next(this.tiles);
-  }
 
   //Return an array of all available columns
   getAvailableCollumns(){

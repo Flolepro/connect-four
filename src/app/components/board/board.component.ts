@@ -5,7 +5,7 @@ import { Tile } from 'src/app/models/tile';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss']
+  styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
 
@@ -13,6 +13,7 @@ export class BoardComponent implements OnInit {
 
   }
 
+  //Members for the board functions
   tiles:Tile[][];
 
   //Component initialization
@@ -21,9 +22,7 @@ export class BoardComponent implements OnInit {
     this.tiles=this.gameService.tiles;
     this.gameService.tilesActive.subscribe(value => this.tiles = value);
     this.gameService.initNewGame();
-
   }
-
 
   coinDropOn(col:any){
     this.gameService.coinDrop(this.tiles.indexOf(col));

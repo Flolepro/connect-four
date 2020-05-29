@@ -21,6 +21,9 @@ export class SidebarComponent implements OnInit{
   //Message feedback to diasplayy
   message:string;
 
+  //For NextRound button
+  isRoundWIn = false;
+
   //Constructor, dependency injection
   constructor(
     private gameService : GameService,
@@ -29,6 +32,7 @@ export class SidebarComponent implements OnInit{
 
     ngOnInit(): void {
       this.gameService.messageActive.subscribe(value => this.message = value);
+      this.gameService.currentRoundWinActive.subscribe(value => this.isRoundWIn = value);
     }
 
   //Toggle auto play mode
@@ -80,4 +84,8 @@ export class SidebarComponent implements OnInit{
     this.gameService.initNewGame();
   }
 
+  onNextRound(){
+    this.clearAutoplay(this.interval);
+    this.gameService.initNewRound();
+  }
 }
