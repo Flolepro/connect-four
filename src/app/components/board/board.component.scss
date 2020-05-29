@@ -51,8 +51,11 @@ $board-width: 500px;
   }
 }
 
-//The page title
 
+@font-face {
+  font-family: shPincher;
+  src: url(../../../assets/fonts/SHPinscher-Regular.otf) format("opentype");
+}
 
 //The page background, not used anymore, maybe reuse later
 .app-background{
@@ -77,9 +80,18 @@ $board-width: 500px;
   height: 100vh;
   top:0;
 
-
+  //The page title
   & h2{
+    padding:30px;
+    margin-top:30px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'shPincher', 'arial', sans-serif;
+    font-size: 100px;
     text-align: center;
+    float:center;
+    width:500px;
+    height:100px;
   }
   //The left panel
   &__left-panel{
