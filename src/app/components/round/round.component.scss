@@ -1,5 +1,15 @@
 mat-nav-list {
-  margin-top:20px;
   max-height: 80px;
   overflow: auto;
+}
+.show-button{
+  width: 100%;
+  margin-top:20px;
+  border:1px inset black;
+  &.toggled{
+    background-color:grey;
+  }
+  &:hover{
+    border:1px inset white;
+  }
 }

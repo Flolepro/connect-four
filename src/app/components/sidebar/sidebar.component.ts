@@ -24,6 +24,10 @@ export class SidebarComponent implements OnInit{
   //For NextRound button
   isRoundWIn = false;
 
+  //Player's scores
+  scoreP1:number;
+  scoreP2:number;
+
   //Constructor, dependency injection
   constructor(
     private gameService : GameService,
@@ -32,6 +36,8 @@ export class SidebarComponent implements OnInit{
 
     ngOnInit(): void {
       this.gameService.messageActive.subscribe(value => this.message = value);
+      this.gameService.player1ScoreActive.subscribe(value => this.scoreP1 = value);
+      this.gameService.player2ScoreActive.subscribe(value => this.scoreP2 = value);
       this.gameService.currentRoundWinActive.subscribe(value => this.isRoundWIn = value);
     }
 

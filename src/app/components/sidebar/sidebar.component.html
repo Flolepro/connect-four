@@ -1,11 +1,18 @@
 
 <div class="sidebar">
-  <mat-slide-toggle  class="sidebar__toggle" (click)="onSwitchTheme()">
-      Switch theme
-  </mat-slide-toggle>
+  <mat-slide-toggle  class="sidebar__toggle" (click)="onSwitchTheme()">Switch theme</mat-slide-toggle>
   <div class="sidebar__feedback-text">{{ message }}</div>
+  <div class="sidebar__players">
+    <div class="sidebar__players--first">
+      P1 Score : {{scoreP1}}
+    </div>
+    <div class="sidebar__players--second">
+      P2 Score : {{scoreP2}}
+    </div>
+  </div>
+  <app-round></app-round>
   <button mat-raised-button class="sidebar__button" [class.toggled]="toggledAutoplay" (click)="onLaunchhAutoplay()">Toggle Auto-play</button>
   <button mat-raised-button class="sidebar__button" (click)="onNextRound()" [disabled]="!isRoundWIn">Next round</button>
   <button mat-raised-button class="sidebar__button" (click)="onResetGame()">Reset game</button>
-  <app-round></app-round>
+
 </div>

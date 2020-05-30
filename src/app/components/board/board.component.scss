@@ -57,126 +57,113 @@ $board-width: 500px;
   src: url(../../../assets/fonts/SHPinscher-Regular.otf) format("opentype");
 }
 
-//The page background, not used anymore, maybe reuse later
-.app-background{
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  z-index: -100;
-  //background: url("../assets/images/piles-of-wood-royalty-free-image-106548715-1531507536.jpg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-position: center center;
-  -webkit-filter: blur(10px); /* Safari 6.0 - 9.0 */
-  filter: blur(10px);
-}
-
 //The application container
 .app-container{
-  height: 100vh;
-  top:0;
+  margin-top:0px;
+  width:100vw;
+  margin:none;
 
+  @include lg {
+    margin-top:0px;
+  }
   //The page title
-  & h2{
-    padding:30px;
-    margin-top:30px;
+  &__title{
+    margin-top:15px;
     margin-left: auto;
     margin-right: auto;
     font-family: 'shPincher', 'arial', sans-serif;
-    font-size: 100px;
+    font-size: 50px;
     text-align: center;
     float:center;
-    width:500px;
-    height:100px;
+    width:auto;
+    height:40px;
+
+    @include lg {
+      height:80px;
+      margin-top:50px;
+      font-size: 100px;
+    }
+
   }
   //The left panel
   &__left-panel{
-
+    margin:auto;
     //The application game board
     &__board {
 
       //Board style
-      height:250px;
-      width:250px;
+      height:300px;
+      width:290px;
       margin:auto;
       background-color: rgb(33, 80, 209);
       -webkit-border-radius: 15px;
       -moz-border-radius: 15px;
       border-radius: 15px;
 
-      @include sm {
-        width:200px;
-        height:200px;
-      }
-
-      @include md {
-        height:250px;
-        width:250px;
-      }
-
       @include lg {
-        width:500px;
-        height:500px;
+        width:566px;
+        height:550px;
       }
+
 
       //Columns style
       &__col{
-        width:35px;
+        width:41px;
         padding-top:20px;
         height:300px;
         display: inline-block;
 
-        @include sm {
-          width:28.5px;
-          padding-top:14px;
-          height:200px;
-        }
-
-        @include md {
-          width:35px;
-          padding-top:20px;
-          height:300px;
-        }
-
         @include lg {
-          width:60px;
-          padding-top:30px;
+          width:70px;
+          padding-top:45px;
           height:500px;
           margin-left:8px;
         }
 
-        //&:hover > &__tile--white:last-of-type{
-        //  background-color: grey;
-        //}
-        //Tiles style
-        &__tile{
-          width:25px;
-          height:25px;
-          margin:6px;
-          bottom: 0;
-          border: 2px inset white;
-          border-radius: 50%;
+        &:hover{
+          cursor:pointer;
+        }
+        &:hover mat-icon:first-of-type{
+          display:block;
+        }
+        //Drop arrow to col top
+        &__arrow__icon{
+          display:none;
+          position: absolute;
+          margin-left:16px;
+          margin-top:-13px;
+          width:15px;
+          height:15px;
+          font-size: 15px;
 
           @include sm {
-            width:20px;
-            height:20px;
-            margin:4px;
-          }
-
-          @include md {
-            width:25px;
-            height:25px;
-            margin:6px;
+            margin-left:9px;
+            margin-top:-11px;
+            font-size: 12px;
           }
 
           @include lg {
-            width:50px;
-            height:50px;
-            margin:10px;
+            margin-left:19px;
+            margin-top:-39px;
+            width:35px;
+            height:35px;
+            font-size: 40px;
+          }
+        }
+
+        //Tiles style
+        &__tile{
+          width:38px;
+          height:38px;
+          margin-top:5px;
+          margin-left:3px;
+          border: 2px inset white;
+          border-radius: 50%;
+
+          @include lg {
+            width:70px;
+            height:70px;
+            margin-bottom:6px;
           }
 
           //Empty tile
@@ -187,24 +174,25 @@ $board-width: 500px;
             }
           }
 
-          //Blue tile
-          &--blue{
-            background-color: blue;
+          //Red tile
+          &--red{
+            background-color: rgb(231, 43, 43);
 
           }
 
-          //Red tile
-          &--red{
-            background-color: red;
-            @include lg {
-              width:50px;
-              height:50px;
-              margin:10px;
-            }
+          //Yellow tile
+          &--yellow{
+            background-color: rgb(255, 230, 0);
           }
         }
       }
     }
+  }
+
+
+  //The right panel
+  &__right-panel{
+    margin:auto;
   }
 }
 

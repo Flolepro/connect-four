@@ -7,10 +7,10 @@ export class ColorService{
   DEFAULT_COLOR = '--white';
 
   //The color of the player 1 coins
-  P1_COLOR = '--blue';
+  P1_COLOR = '--red';
 
   //The color of the player 2 coins
-  P2_COLOR = '--red';
+  P2_COLOR = '--yellow';
 
   constructor() { }
 

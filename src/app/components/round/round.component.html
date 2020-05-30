@@ -1,6 +1,9 @@
+<button mat-raised-button class="show-button" (click)="show=!show">Show rounds</button>
 <mat-nav-list>
-  <mat-list-item *ngFor="let round of (rounds$ | async)?.reverse(); ">
-     <div matLine >Round : {{ round.id }}</div>
-     <div matLine >Winner : {{ round.winner }}</div>
-  </mat-list-item>
+  <ng-container *ngIf="show">
+    <mat-list-item *ngFor="let round of (rounds$ | async)?.reverse(); ">
+      <div matLine >Round : {{ round.id }}</div>
+      <div matLine >Winner : {{ round.winner }}</div>
+   </mat-list-item>
+  </ng-container>
 </mat-nav-list>

@@ -10,6 +10,7 @@ import { Store } from '@ngxs/store';
 })
 export class RoundComponent implements OnInit {
   rounds$: Observable<Round[]>;
+  show=false;
   constructor(private store: Store) { }
 
   ngOnInit(): void {
