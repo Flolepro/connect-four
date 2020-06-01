@@ -1,6 +1,8 @@
-
+<!-- Right sidebar of the application -->
 <div class="sidebar">
+  <!-- Theme switch button -->
   <mat-slide-toggle  class="sidebar__toggle" (click)="onSwitchTheme()">{{'SwitchTheme' | translate }}</mat-slide-toggle>
+  <!-- Language switch select -->
   <mat-form-field class="sidebar__lang-select">
     <mat-select
         matNativeControl
@@ -12,7 +14,9 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <!-- Feedback text displayed from the game service -->
   <div class="sidebar__feedback-text">{{ message | translate }}</div>
+  <!-- The players's scores -->
   <div class="sidebar__players">
     <div class="sidebar__players--first">
       {{'P1Score' | translate }} {{scoreP1}}
@@ -21,8 +25,12 @@
       {{'P2Score' | translate }} {{scoreP2}}
     </div>
   </div>
+  <!-- Round component for rounds list -->
   <app-round></app-round>
+  <!-- Button for launching auto-play -->
   <button mat-raised-button class="sidebar__button" [class.toggled]="toggledAutoplay" (click)="onLaunchhAutoplay()">{{'ToggleAutoPlay' | translate }}</button>
+  <!-- Button for next round feature -->
   <button mat-raised-button class="sidebar__button" (click)="onNextRound()" [disabled]="!isRoundWIn">{{'NextRound' | translate }}</button>
+  <!-- Button for new game feature -->
   <button mat-raised-button class="sidebar__button" (click)="onResetGame()">{{'ResetGame' | translate }}</button>
 </div>

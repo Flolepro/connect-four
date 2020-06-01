@@ -1,5 +1,4 @@
-<!--<div class="app-background"></div>-->
-
+<!-- App container -->
 <div class="app-container container-fluid">
   <!-- First Row displayed : the title -->
   <div class="row">
@@ -11,22 +10,18 @@
       </div>
       <!-- Second Row displayed : the board -->
       <div class="row">
-        <!--Board left panel : game -->
+        <!--Board left panel : game display -->
         <div class="col-sm app-container__left-panel">
           <div class="app-container__left-panel__board">
             <div class="app-container__left-panel__board__col" *ngFor="let col of tiles.reverse()" (click)="coinDropOn(col)">
-              <!--<svg width="50" height="50">
-                <circle cx="25" cy="25" r="20" fill="yellow" />
-              </svg> -->
               <div class="app-container__left-panel__board__col__arrow"><mat-icon class="app-container__left-panel__board__col__arrow__icon">arrow_circle_down</mat-icon></div>
               <div class="app-container__left-panel__board__col__tile app-container__left-panel__board__col__tile{{tile.color}}" *ngFor="let tile of col.reverse()"></div>
             </div>
           </div>
         </div>
-        <!--Board right panel : actions -->
-
       </div>
     </div>
+    <!-- The right panel containing the sidebar -->
     <div class="col-sm">
       <div class="col-sm app-container__right-panel">
         <app-sidebar></app-sidebar>

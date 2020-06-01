@@ -51,4 +51,10 @@ describe('BoardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should drop coin', () => {
+    expect(component.coinDropOn(-2)).toBe(false);
+    expect(component.coinDropOn(8)).toBe(false);
+    expect(component.coinDropOn(1)).toBe(false);
+  });
 });

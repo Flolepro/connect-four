@@ -29,7 +29,6 @@ export class ColorService{
     else if(player==2){
       playerColorClass=this.P2_COLOR;
     }
-
     return playerColorClass;
   }
 

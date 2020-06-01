@@ -16,8 +16,4 @@ export class RoundComponent implements OnInit {
   ngOnInit(): void {
     this.rounds$ = this.store.select(state => state.rounds.rounds);
   }
-
-  showInfo(id:number){
-    console.log('Show modal info for the round : '+id);
-  }
 }

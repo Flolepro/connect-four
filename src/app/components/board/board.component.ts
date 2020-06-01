@@ -24,8 +24,8 @@ export class BoardComponent implements OnInit {
     this.gameService.initNewGame();
   }
 
-  coinDropOn(col:any){
-    this.gameService.coinDrop(this.tiles.indexOf(col));
+  coinDropOn(col:any):boolean{
+    return this.gameService.coinDrop(this.tiles.indexOf(col));
   }
 
 

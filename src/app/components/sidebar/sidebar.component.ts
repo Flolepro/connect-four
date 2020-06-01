@@ -15,14 +15,14 @@ export class SidebarComponent implements OnInit{
   //Toggle autoplay for button style and interval unicity
   toggledAutoplay=false;
 
+  //For NextRound button
+  isRoundWIn = false;
+
   //Interval for autoplay
   interval:any;
 
   //Message feedback to diasplayy
   message:string;
-
-  //For NextRound button
-  isRoundWIn = false;
 
   //Player's scores
   scoreP1:number;
@@ -38,13 +38,14 @@ export class SidebarComponent implements OnInit{
     public translate: TranslateService
     ) { }
 
-    ngOnInit(): void {
-      this.selectedLang= this.translate.getDefaultLang();
-      this.gameService.messageActive.subscribe(value => this.message = value);
-      this.gameService.player1ScoreActive.subscribe(value => this.scoreP1 = value);
-      this.gameService.player2ScoreActive.subscribe(value => this.scoreP2 = value);
-      this.gameService.currentRoundWinActive.subscribe(value => this.isRoundWIn = value);
-    }
+  //initialize the component
+  ngOnInit(): void {
+    this.selectedLang= this.translate.getDefaultLang();
+    this.gameService.messageActive.subscribe(value => this.message = value);
+    this.gameService.player1ScoreActive.subscribe(value => this.scoreP1 = value);
+    this.gameService.player2ScoreActive.subscribe(value => this.scoreP2 = value);
+    this.gameService.currentRoundWinActive.subscribe(value => this.isRoundWIn = value);
+  }
 
   //Toggle auto play mode
   onLaunchhAutoplay(){
@@ -57,15 +58,17 @@ export class SidebarComponent implements OnInit{
       let playerPlaying : number;
       let gameIsWin = false;
 
+      //The auto play interval
       this.interval =
         setInterval(function(){
+          //The player playing
           playerPlaying = thatGameService.playerPlaying;
-          //TODO get random in available columns
+          //Random col to drop coin in
           let columnAvailable = thatGameService.getAvailableCollumns();
-
-
+          //Drop the coin and check if the game is win
           gameIsWin = thatGameService.coinDrop(columnAvailable[Math.floor(Math.random() * columnAvailable.length)]);
             if(gameIsWin==true){
+              //Stop the interval if game is win
               that.clearAutoplay(that.interval);
             }
         }, 100);
@@ -75,31 +78,31 @@ export class SidebarComponent implements OnInit{
     }
   }
 
-  //Get random int for collumn drop
-  getRandomInt(max:number):number{
-    return Math.floor(Math.random() * Math.floor(max));
-  }
-
+  //Clear autoplay interval
   clearAutoplay(interval:any){
     clearInterval(interval);
     this.toggledAutoplay=false;
   }
 
+  //Switch theme between dark and light
   onSwitchTheme(){
     this.themeSwitchBool=!this.themeSwitchBool;
     this.themeService.switchTheme(this.themeSwitchBool);
   }
 
+  //Reset game values
   onResetGame(){
     this.clearAutoplay(this.interval);
     this.gameService.initNewGame();
   }
 
+  //Create next round
   onNextRound(){
     this.clearAutoplay(this.interval);
     this.gameService.initNewRound();
   }
 
+  //Switch language between en and fr
   switchLang(lang: string) {
     this.selectedLang=lang;
     this.translate.use(this.selectedLang);

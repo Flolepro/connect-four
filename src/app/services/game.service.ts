@@ -116,6 +116,7 @@ export class GameService{
       this.currentRoundWinSubject.next(true);
       this.currentRoundWin=true;
       this.currentRound.winner='Player'+this.playerPlaying+'Name';
+      //Update players's score
       if(this.playerPlaying==1){
         this.player1Score=this.player1Score+1;
         this.player1ScoreSubject.next(this.player1Score);
@@ -124,6 +125,7 @@ export class GameService{
         this.player2Score=this.player2Score+1;
         this.player2ScoreSubject.next(this.player2Score);
       }
+      //Update current round
       this.store.dispatch(new UpdateRound(this.currentRound));
       return true;
     }
@@ -150,25 +152,30 @@ export class GameService{
   //The function to drop a coin in the board
   coinDrop(col:number):boolean{
     if(!this.currentRoundWin){
-      //Get the player  color
-      let playerColorClass = this.colorService.getPlayerColor(this.playerPlaying)
+      if(col<this.maxCols && col>=0){
+        //Get the player  color
+        let playerColorClass = this.colorService.getPlayerColor(this.playerPlaying)
 
-      //Search for the  to set the color
-      let line = 0;
-      for (let tile of this.tiles[col]) {
-        if(tile.color==this.colorService.DEFAULT_COLOR){
-          tile.color=playerColorClass;
-          break;
+        //Search for the  to set the color
+        let line = 0;
+        for (let tile of this.tiles[col]) {
+          if(tile.color==this.colorService.DEFAULT_COLOR){
+            tile.color=playerColorClass;
+            break;
+          }
+          if(line+1==6){
+            break;
+          }
+          line++;
         }
-        if(line+1==6){
-          break;
-        }
-        line++;
+        this.tilesSubject.next(this.tiles);
+
+        //Return if the game is win this turn
+        return this.isGameWin();
       }
-      this.tilesSubject.next(this.tiles);
-
-      //Return if the game is win this turn
-      return this.isGameWin();
+      else{
+        return false;
+      }
     }
     return true;
   }

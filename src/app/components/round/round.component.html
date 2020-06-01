@@ -1,4 +1,6 @@
+<!-- Button for rounds list display -->
 <button mat-raised-button class="show-button" (click)="show=!show">{{'ShowRound' | translate }}</button>
+<!-- Rounds list display -->
 <mat-nav-list>
   <ng-container *ngIf="show">
     <mat-list-item *ngFor="let round of (rounds$ | async)?.reverse(); ">

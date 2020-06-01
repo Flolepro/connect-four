@@ -19,6 +19,7 @@ describe('SidebarComponent', () => {
   let component: SidebarComponent;
   let fixture: ComponentFixture<SidebarComponent>;
 
+  //Imports for the component
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -43,12 +44,14 @@ describe('SidebarComponent', () => {
     .compileComponents();
   }));
 
+  //Initialize component before each test
   beforeEach(() => {
     fixture = TestBed.createComponent(SidebarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
+  //Test the component creation
   it('should create', () => {
     expect(component).toBeTruthy();
   });
