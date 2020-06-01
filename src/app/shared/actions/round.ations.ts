@@ -1,4 +1,4 @@
-import { Round } from 'src/app/models/round'
+import { Round } from '../../../app/models/round'
 
 
 export class AddRound {

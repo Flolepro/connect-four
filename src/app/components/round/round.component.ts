@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Round } from 'src/app/models/round';
+import { Round } from '../../../app/models/round';
 import { Store } from '@ngxs/store';
 
 @Component({

@@ -15,6 +15,11 @@ $screen-xl-min: 1200px;
 // Board width
 $board-width: 500px;
 
+//Player's colors
+$colorP1 : #E72B2B;
+$colorP2 : #FFE600;
+
+
 // Small devices
 @mixin sm {
   @media (min-width: #{$screen-sm-min}) {
@@ -57,7 +62,67 @@ $board-width: 500px;
   src: url(../../../assets/fonts/SHPinscher-Regular.otf) format("opentype");
 }
 
-//The application container
+
+//Winned tile animation for P1
+@keyframes opacityfadingP1 {
+  0% {
+    border-color: white;
+    background-color: rgba($colorP1, 1);
+  }
+  50% {
+    border-color: grey;
+    background-color: rgba($colorP1, 0.8);
+  }
+  100% {
+    border-color: white;
+    background-color: rgba($colorP1, 1);
+  }
+}
+@-webkit-keyframes opacityfadingP1 {
+  0%  {
+    border-color: white;
+    background-color: rgba($colorP1, 1);
+  }
+  50% {
+    border-color: grey;
+    background-color: rgba($colorP1, 0.8);
+  }
+  100% {
+    border-color: white;
+    background-color: rgba($colorP1, 1);
+  }
+}
+
+//Winned tile animation for P2
+@keyframes opacityfadingP2 {
+  0%  {
+    border-color: white;
+    background-color: rgba($colorP2, 1);
+  }
+  50% {
+    border-color: grey;
+    background-color: rgba($colorP2, 0.8);
+  }
+  100% {
+    border-color: white;
+    background-color: rgba($colorP2, 1);
+  }
+}
+@-webkit-keyframes opacityfadingP2 {
+  0%  {
+    border-color: white;
+    background-color: rgba($colorP2, 1);
+  }
+  50% {
+    border-color: grey;
+    background-color: rgba($colorP2, 0.8);
+  }
+  100% {
+    border-color: white;
+    background-color: rgba($colorP2, 1);
+  }
+}
+
 .app-container{
   margin-top:0px;
   width:100vw;
@@ -117,7 +182,7 @@ $board-width: 500px;
           width:70px;
           padding-top:45px;
           height:500px;
-          margin-left:8px;
+          margin-left:9px;
         }
 
         &:hover{
@@ -177,12 +242,21 @@ $board-width: 500px;
           //Red tile
           &--red{
             background-color: rgb(231, 43, 43);
-
+            &__winned-tile{
+              background-color: rgb(231, 43, 43);
+              animation: opacityfadingP1 0.5s infinite;
+              -webkit-animation: opacityfadingP1 0.5s infinite;
+            }
           }
 
           //Yellow tile
           &--yellow{
             background-color: rgb(255, 230, 0);
+            &__winned-tile{
+              background-color: rgb(255, 230, 0);
+              animation: opacityfadingP2 0.5s infinite;
+              -webkit-animation: opacityfadingP2 0.5s infinite;
+            }
           }
         }
       }

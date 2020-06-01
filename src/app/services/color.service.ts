@@ -12,6 +12,9 @@ export class ColorService{
   //The color of the player 2 coins
   P2_COLOR = '--yellow';
 
+  //The color of the winned tiles
+  COLOR_WIN = '__winned-tile';
+
   constructor() { }
 
   //Get the player coin color

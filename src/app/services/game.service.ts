@@ -10,6 +10,7 @@ import { Round } from '../models/round';
 @Injectable()
 export class GameService{
 
+  //Inject services and store
   constructor(private colorService: ColorService,private store: Store) { }
 
   //Maximum nummber of collumns
@@ -43,13 +44,12 @@ export class GameService{
 
   //The current round
   currentRound:Round;
-  currentRoundWin:false;
+  currentRoundWin=false;
   public currentRoundWinSubject: Subject<boolean> = new BehaviorSubject<boolean>(false);
   public currentRoundWinActive = this.currentRoundWinSubject.asObservable();
 
   //Initialize white tiles
   clearTiles(){
-    this.messageSubject.next('Initialization');
     this.tiles = [];
     //Init game tiles
     for (let colIndex = 0; colIndex < this.maxCols; colIndex++) {
@@ -69,11 +69,11 @@ export class GameService{
     let idFirstPlayer = 1;
     let idSecondPlayer = 2;
     this.playerPlaying=idFirstPlayer;
-    this.player1 = new Player('Player 1',idFirstPlayer);
-    this.player2 = new Player('Player 2',idSecondPlayer);
+    this.player1 = new Player('Player1Name',idFirstPlayer);
+    this.player2 = new Player('Player2Name',idSecondPlayer);
 
     //Notify listeners
-    this.messageSubject.next('Player '+this.playerPlaying+' turn');
+    this.messageSubject.next('Player'+this.playerPlaying+'Turn');
     this.tilesSubject.next(this.tiles);
     this.player1Score=0;
     this.player2Score=0;
@@ -86,6 +86,7 @@ export class GameService{
     let winner = '';
     this.store.dispatch(new ClearRound());
     this.currentRound = new Round(id,turns,winner);
+    this.currentRoundWin=false;
     this.currentRoundWinSubject.next(false);
     this.store.dispatch(new AddRound(this.currentRound));
   }
@@ -96,25 +97,25 @@ export class GameService{
     this.clearTiles();
     this.playerPlaying=1;
     //Notify listeners
-    this.messageSubject.next('Player '+this.playerPlaying+' turn');
+    this.messageSubject.next('Player'+this.playerPlaying+'Turn');
 
     //Init round in store
-    let id = 1;
     let turns = [{player:this.player1,tileDropped:new Array<number>()}];
     let winner = '';
     this.currentRound = new Round(this.currentRound.id+1,turns,winner);
+    this.currentRoundWin=false;
     this.currentRoundWinSubject.next(false);
     this.store.dispatch(new AddRound(this.currentRound));
   }
 
   //Analyse if the game is win or not by the last player
   isGameWin():boolean{
-    let playerColor = this.colorService.getPlayerColor(this.playerPlaying);
     //Fetch all win conditions
-    if(this.fetchXY(playerColor)){
-      this.messageSubject.next('Player '+this.playerPlaying+' has win');
+    if(this.fetchXY()){
+      this.messageSubject.next('Player'+this.playerPlaying+'Win');
       this.currentRoundWinSubject.next(true);
-      this.currentRound.winner='Player '+this.playerPlaying;
+      this.currentRoundWin=true;
+      this.currentRound.winner='Player'+this.playerPlaying+'Name';
       if(this.playerPlaying==1){
         this.player1Score=this.player1Score+1;
         this.player1ScoreSubject.next(this.player1Score);
@@ -123,7 +124,6 @@ export class GameService{
         this.player2Score=this.player2Score+1;
         this.player2ScoreSubject.next(this.player2Score);
       }
-
       this.store.dispatch(new UpdateRound(this.currentRound));
       return true;
     }
@@ -135,39 +135,42 @@ export class GameService{
       else{
         this.playerPlaying=1;
       }
-      this.messageSubject.next('Player '+this.playerPlaying+' turn');
+      this.messageSubject.next('Player'+this.playerPlaying+'Turn');
       return false;
     }
     //Match null
     else{
       this.currentRoundWinSubject.next(true);
       this.currentRound.winner='Nobody';
-      this.messageSubject.next('It\'s a draw !');
+      this.messageSubject.next('DrawGame');
     }
     return false;
   }
 
   //The function to drop a coin in the board
   coinDrop(col:number):boolean{
-    //Get thhe player  color
-    let playerColorClass = this.colorService.getPlayerColor(this.playerPlaying)
+    if(!this.currentRoundWin){
+      //Get the player  color
+      let playerColorClass = this.colorService.getPlayerColor(this.playerPlaying)
 
-    //Search for the  to set the color
-    let line = 0;
-    for (let tile of this.tiles[col]) {
-      if(tile.color==this.colorService.DEFAULT_COLOR){
-        tile.color=playerColorClass;
-        break;
+      //Search for the  to set the color
+      let line = 0;
+      for (let tile of this.tiles[col]) {
+        if(tile.color==this.colorService.DEFAULT_COLOR){
+          tile.color=playerColorClass;
+          break;
+        }
+        if(line+1==6){
+          break;
+        }
+        line++;
       }
-      if(line+1==6){
-        break;
-      }
-      line++;
+      this.tilesSubject.next(this.tiles);
+
+      //Return if the game is win this turn
+      return this.isGameWin();
     }
-    this.tilesSubject.next(this.tiles);
-
-    //Return if the game is win this turn
-    return this.isGameWin();
+    return true;
   }
 
   //Return an array of all available columns
@@ -190,10 +193,14 @@ export class GameService{
   }
 
   //Iterate and check the win conditions in the actual board for the given player
-  fetchXY(playerColor:string):boolean{
+  fetchXY():boolean{
     //TODO rework this for only check the played s and not the whole board each time
+    let playerColor = this.colorService.getPlayerColor(this.playerPlaying);
     //All directions to fetch for
     let directions = [[1,0], [1,-1], [1,1], [0,1]];
+    //is win check
+    let isWin = false;
+
     for (let dir of directions) {
       //Getting current directions
       let dCol = dir[0];
@@ -213,19 +220,18 @@ export class GameService{
               && playerColor == this.tiles[colIndex+dCol][lineIndex+dLine].color
               && playerColor == this.tiles[colIndex+2*dCol][lineIndex+2*dLine].color
               && playerColor == this.tiles[lastCol][lastLine].color) {
+                this.tiles[colIndex][lineIndex].color+=this.colorService.COLOR_WIN;
+                this.tiles[colIndex+dCol][lineIndex+dLine].color+=this.colorService.COLOR_WIN;
+                this.tiles[colIndex+2*dCol][lineIndex+2*dLine].color+=this.colorService.COLOR_WIN;
+                this.tiles[lastCol][lastLine].color+=this.colorService.COLOR_WIN;
                 //Game is win by the player
-                return true;
+                isWin = true;
             }
           }
         }
       }
     }
-    //No one win the game
-    return false;
+    //Return win
+    return isWin
   }
-
-  isEmptyTilesLeft(){
-    return true;
-  }
-
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ThemeService } from 'src/app/services/theme.service';
+import { ThemeService } from '../app/services/theme.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +11,12 @@ import { ThemeService } from 'src/app/services/theme.service';
 export class AppComponent implements OnInit {
 
   constructor(
-    private themeService : ThemeService
-    ) { }
+    private themeService : ThemeService,
+    public translate: TranslateService
+    ) {
+      translate.addLangs(['en', 'fr']);
+      translate.setDefaultLang('en');
+    }
 
   otherTheme = true;
 

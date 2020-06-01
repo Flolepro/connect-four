@@ -1,18 +1,28 @@
 
 <div class="sidebar">
-  <mat-slide-toggle  class="sidebar__toggle" (click)="onSwitchTheme()">Switch theme</mat-slide-toggle>
-  <div class="sidebar__feedback-text">{{ message }}</div>
+  <mat-slide-toggle  class="sidebar__toggle" (click)="onSwitchTheme()">{{'SwitchTheme' | translate }}</mat-slide-toggle>
+  <mat-form-field class="sidebar__lang-select">
+    <mat-select
+        matNativeControl
+        [value]="selectedLang">
+      <mat-option *ngFor="let languageI of translate.getLangs()"
+        [value]="languageI"
+        (click)="switchLang(languageI)">
+        {{ languageI }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="sidebar__feedback-text">{{ message | translate }}</div>
   <div class="sidebar__players">
     <div class="sidebar__players--first">
-      P1 Score : {{scoreP1}}
+      {{'P1Score' | translate }} {{scoreP1}}
     </div>
     <div class="sidebar__players--second">
-      P2 Score : {{scoreP2}}
+      {{'P2Score' | translate }} {{scoreP2}}
     </div>
   </div>
   <app-round></app-round>
-  <button mat-raised-button class="sidebar__button" [class.toggled]="toggledAutoplay" (click)="onLaunchhAutoplay()">Toggle Auto-play</button>
-  <button mat-raised-button class="sidebar__button" (click)="onNextRound()" [disabled]="!isRoundWIn">Next round</button>
-  <button mat-raised-button class="sidebar__button" (click)="onResetGame()">Reset game</button>
-
+  <button mat-raised-button class="sidebar__button" [class.toggled]="toggledAutoplay" (click)="onLaunchhAutoplay()">{{'ToggleAutoPlay' | translate }}</button>
+  <button mat-raised-button class="sidebar__button" (click)="onNextRound()" [disabled]="!isRoundWIn">{{'NextRound' | translate }}</button>
+  <button mat-raised-button class="sidebar__button" (click)="onResetGame()">{{'ResetGame' | translate }}</button>
 </div>

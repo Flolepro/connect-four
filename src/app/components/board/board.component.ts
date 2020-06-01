@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../../services/game.service';
-import { Tile } from 'src/app/models/tile';
+import { Tile } from '../../../app/models/tile';
 
 @Component({
   selector: 'app-board',

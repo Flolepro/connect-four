@@ -1,5 +1,5 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { Round } from 'src/app/models/round';
+import { Round } from '../../../app/models/round';
 import { RemoveRound, AddRound, UpdateRound, ClearRound } from '../actions/round.ations';
 import { patch, updateItem } from '@ngxs/store/operators';
 

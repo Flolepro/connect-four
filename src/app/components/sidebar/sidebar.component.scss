@@ -1,8 +1,8 @@
+//This is a mobile first's style
 @font-face {
   font-family: shPincher;
   src: url(../../../assets/fonts/SHPinscher-Regular.otf) format("opentype");
 }
-//This is a mobile first's style
 
 // Small tablets and large smartphones (landscape view)
 $screen-sm-min: 568px;
@@ -47,7 +47,6 @@ $board-width: 500px;
   }
 }
 
-
 // Custom devices
 @mixin rwd($screen) {
   @media (min-width: $screen+'px') {
@@ -55,6 +54,7 @@ $board-width: 500px;
   }
 }
 
+//Sidebar style
 .sidebar{
   font-family: 'shPincher', 'arial', sans-serif;
   letter-spacing: 2px;
@@ -69,7 +69,6 @@ $board-width: 500px;
   border-radius: 5px;
   border:1px solid grey;
   padding:10px;
-
   @include lg {
     padding:20px;
     margin-top:160px;
@@ -78,6 +77,24 @@ $board-width: 500px;
     border:1px solid grey;
   }
 
+  &__toggle{
+    font-size: 10px;
+    @include lg {
+      font-size: 17px;
+    }
+  }
+
+  //Select for language
+  &__lang-select{
+    width:35px;
+    float:right;
+    margin-top:-18px;
+    margin-right:10px;
+    right:0;
+    height:40px;
+  }
+
+  //Player's scores
   &__players{
     color:black;
     text-align: center;
@@ -85,15 +102,12 @@ $board-width: 500px;
     letter-spacing: 2px;
     word-spacing: 2px;
     font-size: 20px;
-
     @include lg {
       font-size: 25px;
     }
-
     &--first{
       height: 20px;
       background-color: rgb(231, 43, 43);
-
       @include lg {
         height: 30px;
         padding-top:4px;
@@ -112,6 +126,7 @@ $board-width: 500px;
     }
   }
 
+  //All buttons in sidebar
   & button{
     width: 100%;
     margin-top :5px;
@@ -127,6 +142,7 @@ $board-width: 500px;
     }
   }
 
+  //Text from the game service
   &__feedback-text{
     -webkit-border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
@@ -139,7 +155,7 @@ $board-width: 500px;
     text-align: center;
     height:30px;
     width : 100%;
-    font-size: 15px;
+    font-size: 18px;
     background-color: grey;
     color: white;
     text-shadow: 0px 0px 7px black;
@@ -148,7 +164,6 @@ $board-width: 500px;
     font-style: normal;
     font-variant: normal;
     text-transform: none;
-
     @include lg {
       padding-top:8px;
       font-size: 25px;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GameService } from 'src/app/services/game.service';
-import { ThemeService } from 'src/app/services/theme.service';
-
+import { GameService } from '../../../app/services/game.service';
+import { ThemeService } from '../../../app/services/theme.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -28,13 +28,18 @@ export class SidebarComponent implements OnInit{
   scoreP1:number;
   scoreP2:number;
 
+  //Selected language
+  selectedLang:string;
+
   //Constructor, dependency injection
   constructor(
     private gameService : GameService,
-    private themeService : ThemeService
+    private themeService : ThemeService,
+    public translate: TranslateService
     ) { }
 
     ngOnInit(): void {
+      this.selectedLang= this.translate.getDefaultLang();
       this.gameService.messageActive.subscribe(value => this.message = value);
       this.gameService.player1ScoreActive.subscribe(value => this.scoreP1 = value);
       this.gameService.player2ScoreActive.subscribe(value => this.scoreP2 = value);
@@ -93,5 +98,10 @@ export class SidebarComponent implements OnInit{
   onNextRound(){
     this.clearAutoplay(this.interval);
     this.gameService.initNewRound();
+  }
+
+  switchLang(lang: string) {
+    this.selectedLang=lang;
+    this.translate.use(this.selectedLang);
   }
 }
