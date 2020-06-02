@@ -6,7 +6,7 @@ import { BoardComponent } from './components/board/board.component';
 const routes : Routes =[
   { path: 'board', component : BoardComponent},
   { path: '**', component : BoardComponent},
-  { path: '', component : BoardComponent,pathMatch: 'full'}
+  { path: '', component : BoardComponent, pathMatch: 'full'}
 ];
 
 @NgModule({

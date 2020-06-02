@@ -24,6 +24,7 @@ export class BoardComponent implements OnInit {
     this.gameService.initNewGame();
   }
 
+  //Function called when user click on a collumn
   coinDropOn(col:any):boolean{
     return this.gameService.coinDrop(this.tiles.indexOf(col));
   }

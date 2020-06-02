@@ -6,6 +6,7 @@ import { AddRound, UpdateRound, ClearRound } from '../shared/actions/round.ation
 import { Player } from '../models/player';
 import { Store } from '@ngxs/store';
 import { Round } from '../models/round';
+import { Turn } from '../models/turn';
 
 @Injectable()
 export class GameService{
@@ -83,12 +84,8 @@ export class GameService{
     //Init round in store
     let id = 1;
     let turns = [{player:this.player1,tileDropped:new Array<number>()}];
-    let winner = '';
     this.store.dispatch(new ClearRound());
-    this.currentRound = new Round(id,turns,winner);
-    this.currentRoundWin=false;
-    this.currentRoundWinSubject.next(false);
-    this.store.dispatch(new AddRound(this.currentRound));
+    this.updateRoundOnInit(false,'',turns,id)
   }
 
   //New round initialization
@@ -101,21 +98,17 @@ export class GameService{
 
     //Init round in store
     let turns = [{player:this.player1,tileDropped:new Array<number>()}];
-    let winner = '';
-    this.currentRound = new Round(this.currentRound.id+1,turns,winner);
-    this.currentRoundWin=false;
-    this.currentRoundWinSubject.next(false);
-    this.store.dispatch(new AddRound(this.currentRound));
+    this.updateRoundOnInit(false,'',turns,this.currentRound.id+1)
   }
 
   //Analyse if the game is win or not by the last player
   isGameWin():boolean{
-    //Fetch all win conditions
+    //Fetch all win conditions and return true if game is win
     if(this.fetchXY()){
+      //Update message and round for the win
       this.messageSubject.next('Player'+this.playerPlaying+'Win');
-      this.currentRoundWinSubject.next(true);
-      this.currentRoundWin=true;
-      this.currentRound.winner='Player'+this.playerPlaying+'Name';
+      this.updateRoundOnWin(true,'Player'+this.playerPlaying+'Name');
+
       //Update players's score
       if(this.playerPlaying==1){
         this.player1Score=this.player1Score+1;
@@ -178,6 +171,21 @@ export class GameService{
       }
     }
     return true;
+  }
+
+  //Update round and all variable linked too
+  updateRoundOnWin(valRoundWin:boolean, valRoundWinner:string){
+    this.currentRoundWinSubject.next(valRoundWin);
+    this.currentRoundWin=valRoundWin;
+    this.currentRound.winner=valRoundWinner;
+  }
+
+  //Update round and all variable linked too
+  updateRoundOnInit(valRoundWin:boolean, valRoundWinner:string, turns:Turn[], id:number){
+    this.currentRound = new Round(id,turns,valRoundWinner);
+    this.currentRoundWin=valRoundWin;
+    this.currentRoundWinSubject.next(valRoundWin);
+    this.store.dispatch(new AddRound(this.currentRound));
   }
 
   //Return an array of all available columns

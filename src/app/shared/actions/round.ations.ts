@@ -7,12 +7,6 @@ export class AddRound {
     constructor(public payload: Round) {}
 }
 
-export class RemoveRound {
-    static readonly type = '[ROUND] Remove'
-
-    constructor(public payload: Round) {}
-}
-
 export class UpdateRound {
   static readonly type = '[UPDATE] Remove'
 

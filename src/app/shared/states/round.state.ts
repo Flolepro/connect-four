@@ -1,6 +1,6 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { Round } from '../../../app/models/round';
-import { RemoveRound, AddRound, UpdateRound, ClearRound } from '../actions/round.ations';
+import { AddRound, UpdateRound, ClearRound } from '../actions/round.ations';
 import { patch, updateItem } from '@ngxs/store/operators';
 
 //State model class
@@ -33,17 +33,9 @@ export class RoundState {
       })
   }
 
-  //Remove a new round
-  @Action(RemoveRound)
-  remove({getState, patchState }: StateContext<RoundStateModel>, { payload }:RemoveRound) {
-      patchState({
-          rounds: getState().rounds.filter(a => a.id != payload.id)
-      })
-  }
-
   //Update a round
   @Action(UpdateRound)
-  update(ctx: StateContext<RoundStateModel>, { payload }:RemoveRound) {
+  update(ctx: StateContext<RoundStateModel>, { payload }:UpdateRound) {
     ctx.setState(
       patch({
         rounds: updateItem(item=> item.id === payload.id, patch(payload))
@@ -51,7 +43,7 @@ export class RoundState {
     );
   }
 
-  //Update a round
+  //Clear all rounds
   @Action(ClearRound)
   clear(ctx: StateContext<RoundStateModel>, { }:ClearRound) {
     ctx.setState(
