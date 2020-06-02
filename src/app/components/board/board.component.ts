@@ -25,9 +25,10 @@ export class BoardComponent implements OnInit {
   }
 
   //Function called when user click on a collumn
-  coinDropOn(col:number):boolean{
-    if(this.gameService.getAvailableCollumns().includes(this.tiles.indexOf(col))){
-      return this.gameService.coinDrop(this.tiles.indexOf(col));
+  coinDropOn(col:any):boolean{
+    let colIndex = this.tiles.indexOf(col);
+    if(this.gameService.getAvailableCollumns().includes(colIndex)){
+      return this.gameService.coinDrop(colIndex);
     }
   }
 
